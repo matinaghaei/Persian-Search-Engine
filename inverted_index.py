@@ -15,3 +15,6 @@ class InvertedIndex:
     def get_postings_list(self, token):
         if token in self.postings_lists:
             return self.postings_lists[token]
+
+    def get_postings_lists(self):
+        return self.postings_lists.values()

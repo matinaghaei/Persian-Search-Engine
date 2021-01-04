@@ -13,9 +13,9 @@ class QueryProcessor:
             postings_list = self.inverted_index.get_postings_list(token)
             if postings_list:
                 for positions in postings_list.documents:
-                    if positions.doc in relevant_documents:
-                        relevant_documents[positions.doc] += 1
+                    if positions.doc_id in relevant_documents:
+                        relevant_documents[positions.doc_id] += 1
                     else:
-                        relevant_documents[positions.doc] = 1
+                        relevant_documents[positions.doc_id] = 1
         results = sorted(relevant_documents.items(), key=lambda item: item[1], reverse=True)
         return results

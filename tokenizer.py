@@ -50,8 +50,8 @@ class Tokenizer:
         self.build_positionals()
 
     def build_positionals(self):
-        for i in range(len(self.documents)):
-            tokens = tokenize(self.documents[i])
+        for doc in self.documents.get_docs():
+            tokens = tokenize(doc.text)
             positional = []
             p = 0
             for token in tokens:
@@ -62,7 +62,7 @@ class Tokenizer:
             j = 0
             while j < len(positional):
                 token = positional[j][0]
-                positions = Positions(i, positional[j][1])
+                positions = Positions(doc.id, positional[j][1])
                 k = j + 1
                 while k < len(positional) and token == positional[k][0]:
                     positions.add(positional[k][1])
