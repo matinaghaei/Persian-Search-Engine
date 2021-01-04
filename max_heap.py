@@ -76,7 +76,7 @@ class MaxHeap:
             self.insert(res)
         top_results = []
         for i in range(top):
-            top_results.append(self.extract_max())
             if self.size == 0:
                 break
+            top_results.append(self.extract_max())
         return top_results

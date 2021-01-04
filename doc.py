@@ -1,5 +1,3 @@
-
-
 class Doc:
 
     def __init__(self, doc_id, text):
