@@ -9,8 +9,8 @@ def main():
     docs = Documents()
     read_files("sampleDoc/", docs)
     tokenizer = Tokenizer(docs)
-    indexer = Indexer(tokenizer.positionals, docs, 30, 5)
-    query_processor = QueryProcessor(indexer.inverted_index)
+    indexer = Indexer(tokenizer.positionals, docs, stopwords_threshold=30, champion_list_size=10)
+    query_processor = QueryProcessor(indexer.inverted_index, docs)
 
     running = True
     while running:
@@ -18,10 +18,10 @@ def main():
         if query == 'terminate':
             running = False
         else:
-            results = query_processor.search(query)
+            results = query_processor.search(query, top=5)
             for i in range(len(results)):
-                print("{index}. Doc{doc_id} - Contains {word_count} word(s)"
-                      .format(index=i, doc_id=results[i][0], word_count=results[i][1]))
+                print("{index}. Doc{doc_id}    --    Cosine Score : {similarity}"
+                      .format(index=i, doc_id=results[i][0], similarity=results[i][1]))
             print()
 
 

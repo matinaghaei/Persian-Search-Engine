@@ -1,21 +1,39 @@
+import math
 from tokenizer import tokenize
+from max_heap import MaxHeap
 
 
 class QueryProcessor:
 
-    def __init__(self, inverted_index):
+    def __init__(self, inverted_index, docs):
         self.inverted_index = inverted_index
+        self.docs = docs
 
-    def search(self, query):
-        relevant_documents = {}
+    def search(self, query, top):
+        scores = {}
+        terms_freq = {}
         tokens = tokenize(query)
         for token in tokens:
-            postings_list = self.inverted_index.get_postings_list(token)
-            if postings_list:
-                for positions in postings_list.documents:
-                    if positions.doc_id in relevant_documents:
-                        relevant_documents[positions.doc_id] += 1
-                    else:
-                        relevant_documents[positions.doc_id] = 1
-        results = sorted(relevant_documents.items(), key=lambda item: item[1], reverse=True)
-        return results
+            if token in terms_freq:
+                terms_freq[token] += 1
+            else:
+                terms_freq[token] = 1
+
+        for term, number in terms_freq.items():
+            query_tf = 1 + math.log10(number)
+            posting_list = self.inverted_index.get_postings_list(term)
+            for positions in posting_list.champion_list:
+                doc = self.docs.get_doc(positions.doc_id)
+                score = doc.tf_idf_vector[term] * query_tf
+                if doc.id in scores:
+                    scores[doc.id] += score
+                else:
+                    scores[doc.id] = score
+
+        for doc_id in scores.keys():
+            doc = self.docs.get_doc(doc_id)
+            scores[doc_id] /= doc.get_vector_length()
+
+        results = scores.items()
+        max_heap = MaxHeap(len(results))
+        return max_heap.select_top(results, top)
