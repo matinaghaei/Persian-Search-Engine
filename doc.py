@@ -1,3 +1,6 @@
+import math
+
+
 class Doc:
 
     def __init__(self, doc_id, text):
@@ -12,4 +15,4 @@ class Doc:
         length = 0
         for val in self.tf_idf_vector.values():
             length += val * val
-        return length
+        return math.sqrt(length)
