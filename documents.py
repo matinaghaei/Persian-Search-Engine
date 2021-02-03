@@ -5,7 +5,6 @@ class Documents:
 
     def __init__(self):
         self.docs = {}
-        self.center_vector = {}
 
     def add(self, doc_id, text):
         self.docs[doc_id] = Doc(doc_id, text)
@@ -24,5 +23,7 @@ class Documents:
         for doc in self.docs:
             for k, v in doc.tf_idf_vector.items():
                 super_vector.setdefault(k, []).append(v)
+        center_vector = {}
         for k, v in super_vector.items():
-            self.center_vector[k] = sum(v) / len(v)
+            center_vector[k] = sum(v) / len(v)
+        return center_vector
