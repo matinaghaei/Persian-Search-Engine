@@ -14,7 +14,8 @@ class ClusterManager:
         best_cluster = None, 0
         for cluster in self.clusters:
             similarity = cluster.calculate_similarity(query_tf)
-            if similarity > best_cluster[1]:
+            if similarity >= best_cluster[1]:
                 best_cluster = cluster, similarity
+        print(f"\nSearching {best_cluster[0].category} category...")
         results = best_cluster[0].search(query, top)
         return results

@@ -67,7 +67,8 @@ class MaxHeap:
         popped = self.Heap[self.FRONT]
         self.Heap[self.FRONT] = self.Heap[self.size]
         self.size -= 1
-        self.max_heapify(self.FRONT)
+        if self.size > 0:
+            self.max_heapify(self.FRONT)
 
         return popped
 

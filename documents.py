@@ -20,7 +20,7 @@ class Documents:
 
     def calculate_center(self):
         super_vector = {}
-        for doc in self.docs:
+        for doc in self.docs.values():
             for k, v in doc.tf_idf_vector.items():
                 super_vector.setdefault(k, []).append(v)
         center_vector = {}

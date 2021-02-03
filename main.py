@@ -24,7 +24,7 @@ def main():
                 print("No Results :(")
             for i in range(len(results)):
                 print("{index}. Doc{doc_id} \t\t -- \t\t Cosine Score : {similarity}"
-                      .format(index=i, doc_id=results[i][0], similarity=results[i][1]))
+                      .format(index=i + 1, doc_id=results[i][0], similarity=results[i][1]))
             print()
 
 
