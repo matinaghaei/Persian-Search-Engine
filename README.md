@@ -1,2 +1,2 @@
 # Information-Retrieval
-a search engine for Persian language using inverted index and TF-IDF
+A search engine for Persian language using inverted index and TF-IDF
